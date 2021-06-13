@@ -11,8 +11,6 @@ phases:
     commands:
       - echo Building static site...
       - yarn build
-      - echo Run tests...
-      - CI=true yarn test
 
 artifacts:
   type: zip
