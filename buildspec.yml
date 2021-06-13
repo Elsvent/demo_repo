@@ -13,11 +13,7 @@ phases:
       - yarn build
 
 artifacts:
-  type: zip
-  paths:
-    - './build/**/*'
-    - './cicd/**/*'
-
-cache:
-  paths:
-    - './node_modules/**/*'
+  files:
+    - '**/*'
+  discard-paths: no
+  base-directory: build
