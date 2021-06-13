@@ -1,24 +1,25 @@
-name: Build and Deploy
-on:
-  push:
-    branches:
-      - master
-jobs:
+version: 0.2
 
-  install-and-test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-    steps:
-    - uses: actions/checkout@master
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@master
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install and Test
-      run: |
-        yarn
-        yarn test
-      env:
-        CI: true
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - echo Installing app dependencies...
+      - yarn install
+  build:
+    commands:
+      - echo Building static site...
+      - yarn build
+      - echo Run tests...
+      - CI=true yarn test
+
+artifacts:
+  type: zip
+  paths:
+    - './build/**/*'
+    - './cicd/**/*'
+
+cache:
+  paths:
+    - './node_modules/**/*'
